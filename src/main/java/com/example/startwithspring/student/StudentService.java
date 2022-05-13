@@ -21,6 +21,11 @@ public class StudentService {
 
     public void addNewStudent(Student student) {
 
-        System.out.println(student);
+        var studentEmail = studentRepository.findStudentByEmail(student.getEmail());
+
+        if (studentEmail.isPresent()) {
+            throw new IllegalStateException("Email is taken");
+        }
+        studentRepository.save(student);
     }
 }
